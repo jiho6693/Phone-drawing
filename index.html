@@ -14,6 +14,16 @@
       font-size: 1rem;
     }
 
+    #startButton {
+      color: white;
+      background-color: blue;
+      position: fixed;
+      width:100%;
+      height: 100%;
+      z-index: 4;
+      font-size: 1.5rem;
+    }
+
     .menu {
       margin-top: 3%;
       position: fixed;
@@ -147,7 +157,9 @@
  </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+<button id="startButton" onclick="startApplication()">Enter</button>
+
+<script src="p5.min.js"></script>
 <script>
   let motion = false;
   let ios = false;
@@ -172,25 +184,28 @@
     }
   }
 
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    document.body.addEventListener('click', function() {
+  function requestDeviceMotionPermission() {
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
       DeviceMotionEvent.requestPermission()
         .then(function() {
           console.log('DeviceMotionEvent enabled');
           motion = true;
           ios = true;
+          // You may want to start your application logic here
         })
         .catch(function(error) {
           console.warn('DeviceMotionEvent not enabled', error);
-        })
-    
-    })
-  } else {
-    
+        });
+    }
   }
 
-  
+  function startApplication() {
+    requestDeviceMotionPermission();
+    // Hide the button after it's clicked
+    document.getElementById('startButton').style.display = 'none';
+  }
 
+  // Your existing setup and draw functions remain unchanged
   function setup() {
     createCanvas(windowWidth, windowHeight).parent('canvas-container');
     r = random(0, 255);
