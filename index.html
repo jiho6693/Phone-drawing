@@ -3,12 +3,67 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<style>
+  body{
+    margin:0 0 0 0;
+  }
+</style>
 <body>
 
-<!-- 여기서 다른 내용을 표시하고 5초 후에 다른 페이지로 이동합니다. -->
 
 
-<script src="p5.js"></script>
+
+<script>let bg;
+  let img;
+  let motion = false;
+  let ios = false;
+  
+  // below code is essential for ios13 and above. 
+  // A click is needed for the device to request permission 
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    document.body.addEventListener('click', function() {
+      DeviceMotionEvent.requestPermission()
+        .then(function() {
+          console.log('DeviceMotionEvent enabled');
+  
+          motion = true;
+          ios = true;
+        })
+        .catch(function(error) {
+          console.warn('DeviceMotionEvent not enabled', error);
+        })
+    
+    })
+  } else {
+    // we are not on ios13 and above
+    // todo
+    // add detection for hardware for other devices
+    // if(got the hardware) {
+    // motion = true;
+    // }
+  }
+  
+  
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(220);
+  
+    
+  }
+  
+  function draw() {
+    
+    
+    let yMotion = round(0 + rotationX * 10)
+    let xMotion = round(0 + rotationY * 10)
+       fill(255, 100, 50)
+     ellipse(xMotion, yMotion, 72, 72);
+    
+    
+    
+    
+    
+  }</script>
 <!-- 웹에 공유되어있는 라이브러리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
 
